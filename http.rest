@@ -1,0 +1,10 @@
+GET http://localhost:8080/api/menu
+# POST http://localhost:8080/api/menu
+# content-type: application/json
+
+# {
+#     "id":"Burger Queen",
+#     "label":"Burger",
+#     "price":100000,
+#     "description":"burger dari queen's gambit"
+# }
