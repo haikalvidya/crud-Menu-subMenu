@@ -21,4 +21,14 @@ db.sequelize = sequelize;
 db.menu = require("./menu.models.js")(sequelize, Sequelize);
 db.submenu = require("./submenu.models.js")(sequelize, Sequelize)
 
+// associations menu with submenu
+db.menu.hasMany(db.submenu, {
+    foreignKey: 'menu_id',
+    as: 'submenus',
+});
+db.submenu.belongsTo(db.menu, {
+    foreignKey: 'menu_id',
+    as: 'menu',
+});
+
 module.exports = db;

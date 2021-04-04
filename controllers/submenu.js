@@ -1,14 +1,9 @@
-const subMenu = require('../models').subMenu;
+const subMenu = require('../models').submenu;
 
 module.exports = {
     listAll(req, res) {
         return subMenu
-        .findAll({
-            include: [],
-            order: [
-                ['id', 'label'],
-            ],
-        })
+        .findAll()
         .then((submenus) => res.status(200).send(submenus))
         .catch((error) => {res.status(400).send(error); });
     },
@@ -30,7 +25,7 @@ module.exports = {
     add(req,res) {
         return subMenu
         .create({
-            id: req.body.id,
+            // id: req.body.id,
             label: req.body.label,
             price: req.body.price,
             description: req.body.description,

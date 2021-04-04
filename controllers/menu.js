@@ -5,10 +5,10 @@ module.exports = {
     listAll(req, res) {
         return Menu
         .findAll({
-            include: [],
-            order: [
-                ['id', 'label'],
-            ],
+            include:[{
+                model: subMenu,
+                as: 'submenus'
+            }]
         })
         .then((menu) => res.status(200).send(menu))
         .catch((error) => {res.status(400).send(error); });
@@ -36,30 +36,13 @@ module.exports = {
     add(req,res) {
         return Menu
         .create({
-            id: req.body.id,
+            // id: req.body.id,
             label: req.body.label,
             price: req.body.price,
             description: req.body.description,
         })
         .then((menu) => res.status(201).send(menu))
         .catch((error) => res.status(400).send(error));
-    },
-
-    addMenuWithsubMenu(req,res) {
-        return Menu
-        .create({
-            id: req.body.id,
-            label: req.body.Menu_label,
-            price: req.body.price,
-            description: req.body.Menu_description,
-        }, {
-            include: [{
-                model: subMenu,
-                as: 'submenus'
-            }]
-        })
-        .then((menu) => res.status(201).send(menu))
-        .catch((error)=> res.status(400).send(error));
     },
 
     update(req, res) {

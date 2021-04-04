@@ -1,13 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
     const subMenu = sequelize.define("subMenu", {
-        id: {
-            allowNull: false,
-            primaryKey: true,
-            type: Sequelize.STRING
-        },
         menu_id: {
             allowNull: false,
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         },
         label: {
             allowNull: false,
@@ -23,12 +18,12 @@ module.exports = (sequelize, Sequelize) => {
     });
 
     // associations submenu with menu
-    subMenu.associate = models => {
-        subMenu.belongsTo(models.Menu, {
-            foreignKey: 'menu_id',
-            as: 'menu',
-        });
-    };
+    // subMenu.associate = function(models) {
+    //     subMenu.belongsTo(models.Menu, {
+    //         foreignKey: 'menu_id',
+    //         as: 'menu',
+    //     });
+    // };
 
     return subMenu;
 };
