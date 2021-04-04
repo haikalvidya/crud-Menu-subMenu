@@ -1,29 +1,112 @@
-# GET http://localhost:8080/api/menu
+POST http://localhost:8080/api/menu
+content-type: application/json
 
-# GET http://localhost:8080/api/menu
+{
+    "label":"Burger Kingdom",
+    "description":"Burger dari kerajaan"
+}
 
-# DELETE http://localhost:8080/api/menu/1
+POST http://localhost:8080/api/menu
+content-type: application/json
 
-# POST http://localhost:8080/api/menu
-# content-type: application/json
+{
+    "label":"Pizza Republic",
+    "description":"Pizza dari republic pizza"
+}
 
-# {
-#     "label":"Burger",
-#     "price":200000,
-#     "description":"burger dari kerajaan"
-# }
+POST http://localhost:8080/api/menu
+content-type: application/json
 
+{
+    "label":"Cake United",
+    "description":"Cake dari perserikatan cake"
+}
 
-GET http://localhost:8080/api/submenu
+GET http://localhost:8080/api/menu
 
-# DELETE http://localhost:8080/api/submenu/1
+GET http://localhost:8080/api/menu/1
+
+GET http://localhost:8080/api/menu?label=pizza
+
 
 POST http://localhost:8080/api/submenu
 content-type: application/json
 
 {
-    "menu_id":1,
-    "label":"Burger Queen",
-    "price":100000,
-    "description":"burger dari kerajaan"
+    "label":"Burger King",
+    "price":35000,
+    "description":"Raja Burger",
+    "menu_id":1
 }
+
+POST http://localhost:8080/api/submenu
+content-type: application/json
+
+{
+    "label":"Burger Queen",
+    "price":45000,
+    "description":"Ratu Burger",
+    "menu_id":1
+}
+
+POST http://localhost:8080/api/submenu
+content-type: application/json
+
+{
+    "label":"Pizza President",
+    "price":50000,
+    "description":"presiden Pizza",
+    "menu_id":2
+}
+
+POST http://localhost:8080/api/submenu
+content-type: application/json
+
+{
+    "label":"Cake Minister",
+    "price":500000,
+    "description":"Mentri Cake",
+    "menu_id":3
+}
+
+GET http://localhost:8080/api/submenu
+
+GET http://localhost:8080/api/submenu/1
+
+GET http://localhost:8080/api/submenu?label=pizza
+
+PUT http://localhost:8080/api/menu/4
+content-type: application/json
+
+{
+    "description":"Cake dari cake serikat"
+}
+
+PUT http://localhost:8080/api/submenu/1
+content-type: application/json
+
+{
+    "price":55000
+
+}
+
+PUT http://localhost:8080/api/submenu/4
+content-type: application/json
+
+{
+    "price":50000,
+    "description":"mentri-mentri Cake"
+}
+
+GET http://localhost:8080/api/menu
+
+GET http://localhost:8080/api/menu/1
+
+GET http://localhost:8080/api/submenu
+
+GET http://localhost:8080/api/submenu/1
+
+
+DELETE http://localhost:8080/api/menu/3
+
+DELETE http://localhost:8080/api/submenu/1

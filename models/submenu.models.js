@@ -16,13 +16,5 @@ module.exports = (sequelize, Sequelize) => {
         },
     });
 
-    // associations submenu with menu
-    // subMenu.associate = function(models) {
-    //     subMenu.belongsTo(models.Menu, {
-    //         foreignKey: 'menu_id',
-    //         as: 'menu',
-    //     });
-    // };
-
     return subMenu;
 };
