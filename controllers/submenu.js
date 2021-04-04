@@ -1,9 +1,18 @@
+const Menu = require('../models').menu;
 const subMenu = require('../models').submenu;
 
 module.exports = {
     listAll(req, res) {
+        const label = req.query.label;
+        var condition = label ? { label: {[Op.iLike]: `%${label}%`} }: null;
+
         return subMenu
-        .findAll()
+        .findAll({
+            where: condition,
+            order: [
+                ['id']
+            ]
+        })
         .then((submenus) => res.status(200).send(submenus))
         .catch((error) => {res.status(400).send(error); });
     },
@@ -25,33 +34,67 @@ module.exports = {
     add(req,res) {
         return subMenu
         .create({
-            // id: req.body.id,
             label: req.body.label,
             price: req.body.price,
             description: req.body.description,
             menu_id: req.body.menu_id,
         })
-        .then((submenu) => res.status(201).send(submenu))
+        .then((submenu) => {
+            return Menu
+            .findByPk(req.body.menu_id)
+            .then(menu => {
+                if (!menu) {
+                    return res.status(404).send({
+                        message: `Menu Not Found ${req.body.menu_id}`
+                    });
+                }
+                return menu
+                .update({
+                    price: (req.body.price + menu.price),
+                })
+                .then(()=> res.status(201).send(submenu))
+                .catch((error) => res.status(400).send(error));
+            })
+            .catch((error) => res.status(400).send(error));
+        })
         .catch((error) => res.status(400).send(error));
     },
 
     update(req, res) {
         return subMenu
-        .findByPk(req.param.id)
+        .findByPk(req.params.id)
         .then(submenu => {
             if (!submenu) {
                 return res.status(404).send({
                     message: 'Submenu Not Found'
                 });
             }
+            // get submenu price before updated
+            submenu_price = submenu.price
             return submenu
             .update({
-                label: req.body.label || subMenu.label,
-                price: req.body.price || subMenu.price,
-                description: req.body.description || subMenu.description,
-                menu_id: req.body.menu_id || subMenu.menu_id,
+                label: req.body.label || submenu.label,
+                price: req.body.price || submenu.price,
+                description: req.body.description || submenu.description,
+                menu_id: req.body.menu_id || submenu.menu_id,
             })
-            .then(()=> res.status(200).send(submenu))
+            .then(()=> {
+                return Menu
+                .findByPk(submenu.menu_id)
+                .then(menu => {
+                    if (!menu) {
+                        return res.status(404).send({
+                            message: `Menu Not Found ${submenu.menu_id}`
+                        });
+                    }
+                    return menu
+                    .update({
+                        price: menu.price + req.body.price - submenu_price,
+                    })
+                    .then(()=> res.status(200).send(submenu))
+                    .catch((error) => res.status(400).send(error));
+                })
+            })
             .catch((error) => res.status(400).send(error));
         })
         .catch((error) => res.status(400).send(error));
@@ -68,7 +111,23 @@ module.exports = {
             }
             return submenu
             .destroy()
-            .then(() => res.status(204).send())
+            .then(() => {
+                return Menu
+                .findByPk(submenu.menu_id)
+                .then(menu => {
+                    if (!menu) {
+                        return res.status(404).send({
+                            message: `Menu Not Found ${submenu.menu_id}`
+                        });
+                    }
+                    return menu
+                    .update({
+                        price: (menu.price - submenu.price),
+                    })
+                    .then(()=> res.status(204).send())
+                    .catch((error) => res.status(400).send(error));
+                })
+            })
             .catch((error) => res.status(400).send(error));
         })
         .catch((error) => res.status(400).send(error));

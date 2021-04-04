@@ -1,14 +1,22 @@
 const Menu = require('../models').menu;
 const subMenu = require('../models').submenu;
+const Op = require('../models').Sequelize.Op
 
 module.exports = {
     listAll(req, res) {
+        const label = req.query.label;
+        var condition = label ? { label: {[Op.iLike]: `%${label}%`} }: null;
+
         return Menu
         .findAll({
+            where: condition,
             include:[{
                 model: subMenu,
                 as: 'submenus'
-            }]
+            }],
+            order: [
+                ['id']
+            ]
         })
         .then((menu) => res.status(200).send(menu))
         .catch((error) => {res.status(400).send(error); });
@@ -36,7 +44,6 @@ module.exports = {
     add(req,res) {
         return Menu
         .create({
-            // id: req.body.id,
             label: req.body.label,
             price: req.body.price,
             description: req.body.description,
@@ -47,11 +54,11 @@ module.exports = {
 
     update(req, res) {
         return Menu
-        .findByPk(req.param.id)
+        .findByPk(req.params.id)
         .then(menu => {
             if (!menu) {
                 return res.status(404).send({
-                    message: 'Menu Not Found'
+                    message: `Menu Not Found`
                 });
             }
             return menu
