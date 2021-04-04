@@ -8,9 +8,9 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// database file
+// declare database
 const db = require("./models/index.js")
-// for development purpose
+// delete all database rows for development purpose
 db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
 });
