@@ -1,5 +1,6 @@
 const Menu = require('../models').menu;
 const subMenu = require('../models').submenu;
+const Op = require('../models').Sequelize.Op;
 
 module.exports = {
     listAll(req, res) {
@@ -45,7 +46,8 @@ module.exports = {
             .then(menu => {
                 if (!menu) {
                     return res.status(404).send({
-                        message: `Menu Not Found ${req.body.menu_id}`
+                        submenu,
+                        message: `Submenu created, but Menu Not Found`
                     });
                 }
                 return menu
@@ -55,7 +57,10 @@ module.exports = {
                 .then(()=> res.status(201).send(submenu))
                 .catch((error) => res.status(400).send(error));
             })
-            .catch((error) => res.status(400).send(error));
+            .catch((error) => res.status(400).send({
+                submenu,
+                message: `Submenu created, but Menu Not Found`
+            }));
         })
         .catch((error) => res.status(400).send(error));
     },
@@ -84,7 +89,8 @@ module.exports = {
                 .then(menu => {
                     if (!menu) {
                         return res.status(404).send({
-                            message: `Menu Not Found ${submenu.menu_id}`
+                            submenu,
+                            message: `Submenu updated, but Menu Not Found`
                         });
                     }
                     return menu
@@ -92,7 +98,10 @@ module.exports = {
                         price: menu.price + req.body.price - submenu_price,
                     })
                     .then(()=> res.status(200).send(submenu))
-                    .catch((error) => res.status(400).send(error));
+                    .catch((error) => res.status(400).send({
+                        submenu,
+                        message: `Submenu updated, but Menu Not Found`
+                    }));
                 })
             })
             .catch((error) => res.status(400).send(error));
@@ -117,14 +126,14 @@ module.exports = {
                 .then(menu => {
                     if (!menu) {
                         return res.status(404).send({
-                            message: `Menu Not Found ${submenu.menu_id}`
+                            message: `Submenu deleted`
                         });
                     }
                     return menu
                     .update({
                         price: (menu.price - submenu.price),
                     })
-                    .then(()=> res.status(204).send())
+                    .then(()=> res.status(204).send({message: `Submenu deleted`}))
                     .catch((error) => res.status(400).send(error));
                 })
             })

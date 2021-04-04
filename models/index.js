@@ -25,6 +25,7 @@ db.submenu = require("./submenu.models.js")(sequelize, Sequelize)
 db.menu.hasMany(db.submenu, {
     foreignKey: 'menu_id',
     as: 'submenus',
+    onDelete: 'SET NULL'
 });
 db.submenu.belongsTo(db.menu, {
     foreignKey: 'menu_id',

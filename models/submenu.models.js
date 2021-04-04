@@ -1,7 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const subMenu = sequelize.define("subMenu", {
         menu_id: {
-            allowNull: false,
             type: Sequelize.INTEGER
         },
         label: {

@@ -84,7 +84,7 @@ module.exports = {
             }
             return menu
             .destroy()
-            .then(() => res.status(204).send())
+            .then(() => res.status(204).send({message: `Menu deleted`}))
             .catch((error) => res.status(400).send(error));
         })
         .catch((error) => res.status(400).send(error));

@@ -1,12 +1,22 @@
-GET http://localhost:8080/api/menu
+# GET http://localhost:8080/api/menu
 
-# PUT http://localhost:8080/api/menu/1
+# GET http://localhost:8080/api/menu
+
+# DELETE http://localhost:8080/api/menu/1
+
+# POST http://localhost:8080/api/menu
 # content-type: application/json
 
 # {
-#     "price":100000
+#     "label":"Burger",
+#     "price":200000,
+#     "description":"burger dari kerajaan"
 # }
 
+
+GET http://localhost:8080/api/submenu
+
+# DELETE http://localhost:8080/api/submenu/1
 
 POST http://localhost:8080/api/submenu
 content-type: application/json
