@@ -71,11 +71,11 @@ content-type: application/json
 
 GET http://localhost:8080/api/submenu
 
-GET http://localhost:8080/api/submenu/1
+GET http://localhost:8080/api/submenu/10
 
-GET http://localhost:8080/api/submenu?label=pizza
+GET http://localhost:8080/api/submenu?label=burger
 
-PUT http://localhost:8080/api/menu/4
+PUT http://localhost:8080/api/menu/3
 content-type: application/json
 
 {
@@ -100,13 +100,15 @@ content-type: application/json
 
 GET http://localhost:8080/api/menu
 
+GET http://localhost:8080/api/menu?label=pizza
+
 GET http://localhost:8080/api/menu/1
 
 GET http://localhost:8080/api/submenu
 
-GET http://localhost:8080/api/submenu/1
+GET http://localhost:8080/api/submenu/2
 
 
 DELETE http://localhost:8080/api/menu/3
 
-DELETE http://localhost:8080/api/submenu/1
+DELETE http://localhost:8080/api/submenu/3
